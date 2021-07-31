@@ -29,7 +29,7 @@ float MIN_WEIGHT = 3200; //min weight threshold
 float GROWTH; // tracks gains in weight
 
 int interval_count, moisture_count, scale_count; //counters for watering
-int isOpen = 0; // variable that describes which solenoids are open
+int isOpen = 0; // variable that describes which solenoids are open. Full explanation in counter function.
 
 //open solenoid valve
 void giveWater(int solenoid, int count){
@@ -68,7 +68,12 @@ void stopWater(int solenoid, int count){
         }
   }
 
-//raise count for open solenoids - fix for multiple solenoids open at once
+/*raise count for open solenoids - fix for multiple solenoids open at once
+isOpen varaible tracks which valves are open through different values:
+1,3,5,7  Scale valve is open
+2,3,6,7 Moisture valve is open
+4,5,6,7 Interval valve is open
+*/
 void counter(int isOpen){
   
   switch (isOpen){
@@ -324,12 +329,12 @@ void loop() {
    counter(isOpen); //if a solenoid is open update counter
    
  //Thingspeak setup:
-    ThingSpeak.setField(1,e25);
-    ThingSpeak.setField(2,ec);
-    ThingSpeak.setField(3,soil_temp);
-    ThingSpeak.setField(4,vwc);
-    ThingSpeak.setField(5,weight);
-    ThingSpeak.setField(7,isOpen);
+    ThingSpeak.setField(1, e25);
+    ThingSpeak.setField(2, ec);
+    ThingSpeak.setField(3, soil_temp);
+    ThingSpeak.setField(4, vwc);
+    ThingSpeak.setField(5, weight);
+    ThingSpeak.setField(7, isOpen);
     ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
   
     Serial.println("uploaded to Thingspeak server....");
