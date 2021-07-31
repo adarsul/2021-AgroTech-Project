@@ -18,8 +18,10 @@ Thats how the data looked like:
 
 <img width="560" alt="data_collection" src="https://user-images.githubusercontent.com/88232723/127740099-42e496c7-87fc-4e32-a748-e2cde4227e71.png">
 
-Based on the results, We decided to set the min VWC threshold to 64 and the max VWC threshold 90.
+Based on the results, we decided to set the max VWC threshold value to 90.
 
 The Irrigation System
 ---------------------
-
+The system is set to run in the morning at 7:00 AM.
+If the the VWC value in lower than 90, the valve will open and water until the thershold reached.
+Code for the system can be found [here](https://github.com/adarsul/2021-AgroTech-Project/blob/main/Moisture%20Controlled/irrigation_control.ino).
