@@ -118,14 +118,13 @@ void counter(int isOpen){
 #include "time.h"
 
 #include "ThingSpeak.h"
-unsigned long myChannelNumber = 1458806;
-const char * myWriteAPIKey = "9T9KW0WRLVZ98TIE";
+unsigned long myChannelNumber = "" ; //your channel ID
+const char * myWriteAPIKey = ""; //your channel's write API key
 
-//const char* ssid = "Home"; // your wifi SSID name
-//const char* password = "waysler12345" ;// wifi pasword
+const char* ssid = ""; // your wifi SSID name
+const char* password = "" ;// wifi pasword
 
-const char* ssid = "GABI"; // your wifi SSID name
-const char* password = "0526266618" ;// wifi pasword
+
  
 const char* server = "api.thingspeak.com";
 
