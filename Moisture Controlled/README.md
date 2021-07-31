@@ -1,4 +1,7 @@
-A soil moisture watering based system, with data logging using ThingSpeak platform for further data analysis
+A soil moisture watering based system
+=====================================
+
+with data logging using ThingSpeak platform for further data analysis
 
 Equipment used:
 
