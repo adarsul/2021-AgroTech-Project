@@ -1,4 +1,4 @@
-Soil moisture watering based system
+Soil Moisture Watering Based System
 =====================================
 
 with data logging using ThingSpeak platform for further data analysis
