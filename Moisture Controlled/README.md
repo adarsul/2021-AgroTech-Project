@@ -19,7 +19,7 @@ Code for the data collection and cloud uploading can be found [here](https://git
 
 Thats how the data looked like:
 
-<img width="560" alt="data_collection" src="https://user-images.githubusercontent.com/88232723/127740099-42e496c7-87fc-4e32-a748-e2cde4227e71.png">
+<img width="420" alt="data_collection" src="https://user-images.githubusercontent.com/88232723/127740099-42e496c7-87fc-4e32-a748-e2cde4227e71.png">
 
 Based on the results, we decided to set the max VWC threshold value to 90.
 
