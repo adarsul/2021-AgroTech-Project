@@ -26,5 +26,5 @@ Based on the results, we decided to set the max VWC threshold value to 90.
 The Irrigation System
 ---------------------
 The system is set to run in the morning at 7:00 AM.
-If the the VWC value in lower than 90, the valve will open and water until the thershold reached.
+If the the VWC value in lower than 90, the valve will open and water until the thershold has reached.
 Code for the system can be found [here](https://github.com/adarsul/2021-AgroTech-Project/blob/main/Moisture%20Controlled/irrigation_control.ino).
