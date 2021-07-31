@@ -4,27 +4,29 @@
 #include "time.h"
 
 #include "ThingSpeak.h"
-unsigned long myChannelNumber = 1412103;
-const char * myWriteAPIKey = "YB9T1IGWXRYY17SS";
-
-const char* ssid = "HUJI-guest"; // your wifi SSID name
-const char* password = "" ;// wifi pasword
-
-//const char* ssid = "eduroam"; // your wifi SSID name
-//const char* password = "gabribarse@huji.ac.il" ;// wifi pasword
- 
+unsigned long myChannelNumber = <ChannelNumber>;
+const char * myWriteAPIKey = "APIKey";
 const char* server = "api.thingspeak.com";
+
+
+const char* ssid = "t"; // your wifi SSID name
+const char* password = "" ;// wifi pasword
 
 WiFiClient client;
 
 //**************************************************************************************
 
+//moisture sensor setup
 #include "i2cArduino.h"
-
 SVCS3 vcs;
+int moisture_solenoidPin = 28;
+float e25;
+float ec;
+float temp;
+float vwc;
 
 //**************************************************************************************
-//NTP
+//NTP for time synchrinization
 
 // Set time
 #include <NTPClient.h>
@@ -42,19 +44,11 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
 int time_h ; // variable for the hour
 int time_m ; // variable for the minute
 
-int moisture_solenoidPin = 28;
-
-float e25;
-float ec;
-float temp;
-float vwc;
-
-
 //**************************************************************************************
-void setup() {
-  //------------------------------------------------------------------------------------
 
-  // solenoid setup
+void setup() {
+
+   // solenoid setup
   pinMode(moisture_solenoidPin, OUTPUT);
   
 
@@ -74,8 +68,7 @@ void setup() {
 
   ThingSpeak.begin(client);
   WiFi.begin(ssid, password);
-  
-  
+   
  
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -89,8 +82,6 @@ void setup() {
   // stings for time:
    timeClient.begin();
 }
-
-
 
 //************************************************************************************** 
 
