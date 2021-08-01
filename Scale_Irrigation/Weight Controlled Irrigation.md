@@ -34,27 +34,30 @@ HX711.h scale driver
 #### General
 
 User Variables:
-MAX_WEIGHT: the maximum weight which refers to the pot weight after watering. This value is used as refrence to asses plant growth in the total pot weight.
 
-MIN_WEIGHT: the minimum weight threshold. If the weight readind is lower that this value - irrigation is intiated.
+**MAX_WEIGHT**: the maximum weight which refers to the pot weight after watering. This value is used as refrence to asses plant growth in the total pot weight.
 
-WATER_DURATION: this is value refers to the amount of time the irrigation is open upon activation. The program loops every 15 second therefore the water duration is measured in 15 seconds increments.
+**MIN_WEIGHT**: the minimum weight threshold. If the weight readind is lower that this value - irrigation is intiated.
+
+**WATER_DURATION**: this is value refers to the amount of time the irrigation is open upon activation. The program loops every 15 second therefore the water duration is measured in 15 seconds increments.
 
 Say you wanted the system to give 1 liter per watering and you are using a 4 liter per hour watering sprinkler.
-You set Maximum weight to the weight of the plant after watering, minimum weight to that value and subtract 1000 grams. For 1 liter watering the solenoid needts to open for 15 minutes which is 900 seconds. because the loop runs every 15 seconds, we will set the water duration to  $ 900_{seconds} : 15_{seconds} = 60_{loops} $.
+You set Maximum weight to the weight of the plant after watering, minimum weight to that value and subtract 1000 grams. For 1 liter watering the solenoid needts to open for 15 minutes which is 900 seconds. because the loop runs every 15 seconds, we will set the water duration to 60 because:
+
+900 (seconds) : 15 (seconds) = 60 (loops).
 
 Other useful Variables:
-Growth: every time the max weight is updated, the differnece is added to the growth variable. Assuming that the changes in weight due the watering are fixed and that soil and pot weight are constant, the growth in weight is explained by the growth of the plant.
 
-give_water: a boolean that is true when solenoid is open and false when it is closed.
+**Growth**: every time the max weight is updated, the differnece is added to the growth variable. Assuming that the changes in weight due the watering are fixed and that soil and pot weight are constant, the growth in weight is explained by the growth of the plant.
 
-water_count: tracks how many loops (15 second increments) the solenoid is open.
+**give_water**: a boolean that is true when solenoid is open and false when it is closed.
+
+**water_count**: tracks how many loops (15 second increments) the solenoid is open.
 
 #### Scale Calibration
 HX711 translates force to Electrical output values. In order to get readings in grams calibration was needed. We used a linear regression in order to match the output value to a reading in grams. In this code, the conversion is done within the averageRead function.
 
 For more information about calibration:
-
 
 
 #### averageRead function
@@ -69,7 +72,7 @@ In our case, because the thingspeak server allows for communication every 15 sec
 * When reading is less than MIN_WEIGHT the solenoid is opened and water starts flowing, give_water is turned to true. 
 * Every iteration of main loop, if give_water is true (meaning soleniod is open) water_count adds one.
 * If water_count is greater than WATER_DURATION then the watering reached it's limit time - solenoid is closed, give_water is set to false and water count is set to 0. 
-* If the measured weight is greater than MAX_WEIGHT than the weightUpdate function is triggered - updating MAX_WEIGHT and MIN_WEIGHT and adding the differnce to the GROWTH variable.
+* If the measured weight is greater than MAX_WEIGHT then the weightUpdate function is triggered - updating MAX_WEIGHT and MIN_WEIGHT and adding the differnce to the GROWTH variable.
 * Send data to thingspeak channel.
 
 For the data analysis we used for the watering algorithm:
