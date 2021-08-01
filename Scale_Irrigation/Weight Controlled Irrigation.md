@@ -27,7 +27,9 @@ The libraries that were used:
 pic
 
 Wifi.h allows internet connection
+
 Thingspeak.h allows I2C communication
+
 HX711.h scale driver
 
 
@@ -48,7 +50,7 @@ You set Maximum weight to the weight of the plant after watering, minimum weight
 
 Other useful Variables:
 
-**Growth**: every time the max weight is updated, the differnece is added to the growth variable. Assuming that the changes in weight due the watering are fixed and that soil and pot weight are constant, the growth in weight is explained by the growth of the plant.
+**GROWTH**: every time the max weight is updated, the differnece is added to the growth variable. Assuming that the changes in weight due the watering are fixed and that soil and pot weight are constant, the growth in weight is explained by the growth of the plant.
 
 **give_water**: a boolean that is true when solenoid is open and false when it is closed.
 
