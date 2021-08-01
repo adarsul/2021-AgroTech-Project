@@ -1,9 +1,9 @@
 # Weight Controlled Irrigation
 
-### Our Goal
+## Our Goal
 In this project we created a weight controlled irrigation system - pot weight is monitored to indicate it's water content, triggering irrigation when minimum threshold is reached. Since the plant grows and the weight will constantly become higher, the system will track growth and update it's thresholds automatically.
 
-###  Parts
+##  Parts
 
 * ESP32 microcontroller
 * Full size breadboard
@@ -12,13 +12,13 @@ In this project we created a weight controlled irrigation system - pot weight is
 * 4 channel arduino relay
 * 1528-2003-ND Solenoid Valve
 
-### Wiring 
+## Wiring 
 
 Diagram here
 
-### Code Explanation
+## Code Explanation
 
-#### Main Premise
+### Main Premise
 The program constantly collects data of the pot's weight and sends it to thingspeak channel every 15 seconds. If the weight is lower than a user set minimum threshold - irrigation is a activated. If after Irrigation the weight of the pot is higher than the last recorded (or user input) maximum weight, then maximum weight, minimum threshold are updated and growth is tracked.
 
 
@@ -33,9 +33,9 @@ Thingspeak.h allows I2C communication
 HX711.h scale driver
 
 
-#### General
+### General
 
-User Variables:
+#### User Variables:
 
 **MAX_WEIGHT**: the maximum weight which refers to the pot weight after watering. This value is used as refrence to asses plant growth in the total pot weight.
 
@@ -48,7 +48,7 @@ You set Maximum weight to the weight of the plant after watering, minimum weight
 
 900 (seconds) : 15 (seconds) = 60 (loops).
 
-Other useful Variables:
+#### Other useful Variables:
 
 **GROWTH**: every time the max weight is updated, the differnece is added to the growth variable. Assuming that the changes in weight due the watering are fixed and that soil and pot weight are constant, the growth in weight is explained by the growth of the plant.
 
