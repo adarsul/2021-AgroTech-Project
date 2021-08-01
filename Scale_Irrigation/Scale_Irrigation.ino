@@ -2,11 +2,7 @@
 #include <WiFi.h>
 #include "ThingSpeak.h"
 
-unsigned long myChannelNumber = ""; //enter channel number
-const char * myWriteAPIKey = ""; // enter API write key
 
-const char* ssid = ""; // your wifi SSID name
-const char* password = "" ;// wifi pasword
  
 const char* server = "api.thingspeak.com";
 float MAX_WEIGHT = 3500; //Set max weight to determine growth
@@ -15,8 +11,13 @@ float GROWTH; //tracks gain in weight attributed to plant growth
 const int WATER_DURATION = 60; // 15 second increments for watering. For 1 liter using 4L per hour watering. 
 bool give_water = false; //is irrigation on
 int water_count = 0; //amount of loops passed while watering
-const int scale_solenoidPin = 27;
 
+
+unsigned long myChannelNumber = ""; //enter channel number
+const char * myWriteAPIKey = ""; // enter API write key
+
+const char* ssid = ""; // your wifi SSID name
+const char* password = "" ;// wifi pasword
 WiFiClient client;
 
 //open solenoid valve
@@ -45,7 +46,8 @@ void weightUpdate(float weight){
 HX711 scale;
 
 // HX711 circuit wiring
-const int LOADCELL_DOUT_PIN = 35;
+const int scale_solenoidPin = 27; //pin conneceted to relay
+const int LOADCELL_DOUT_PIN = 35; 
 const int LOADCELL_SCK_PIN = 32;
 const float slope = -0.0098;
 float zero = -620;
@@ -54,7 +56,7 @@ float zero = -620;
   secs = how many seconds average be taken
   rate = how many readings per second
   zero = intercept */
-float averageRead (int sec, int rate, float zero){
+float averageRead (int sec, int rate){
    int reps = rate * sec;  // amount of times the loop runs
    int count = 0;
    float sum, weight;
@@ -117,7 +119,7 @@ void setup() {
 }
 
 void loop() {
-  float weight = averageRead(15, 10, zero); //average weight read for time period
+  float weight = averageRead(15, 10); //average weight read for time period
   
   //when irrigation is on, count loops
   if (give_water == true){                  
