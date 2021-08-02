@@ -22,6 +22,7 @@ Adafruit_BME280 bme;
 float calc_VPD(float temp, float humidity){
   SVP = 0.61078*exp((temp/(temp+238.3))*17.2694);
   VPD = SVP*(1-(humidity/100));
+ return VPD;
 }
 
 
@@ -175,6 +176,7 @@ void loop() {
   readvalue = averageRead(15, 10, zero);
   temp = readvalue[1];
   humidity = readvalue[2];
+  VPD = calc_VPD(temp, humidity);
   Serial.println(temp);
   Serial.println(humidity);
   //------------------------------------------------------------------------------------
