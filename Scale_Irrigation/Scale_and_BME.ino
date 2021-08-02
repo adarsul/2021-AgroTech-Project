@@ -5,11 +5,11 @@
 #include <Adafruit_BME280.h>
 
 #include "ThingSpeak.h"
-unsigned long myChannelNumber = 1434967;
-const char * myWriteAPIKey = "W97NYDXHRRPM0KDC";
+unsigned long myChannelNumber = ;
+const char * myWriteAPIKey = "";
 
-const char* ssid = "sulima"; // your wifi SSID name
-const char* password = "waysler12345" ;// wifi pasword
+const char* ssid = ""; // your wifi SSID name
+const char* password = "" ;// wifi pasword
  
 const char* server = "api.thingspeak.com";
 
@@ -18,9 +18,11 @@ WiFiClient client;
 //BME280
 #define SEALEVELPRESSURE_HPA (1007)
 Adafruit_BME280 bme; 
-/*float calc_VPD(float humidity, float pressure){
-  
-}*/
+
+float calc_VPD(float temp, float humidity){
+  SVP = 0.61078*exp((temp/(temp+238.3))*17.2694);
+  VPD = SVP*(1-(humidity/100));
+}
 
 
 void printValues() {
@@ -117,16 +119,6 @@ float* averageRead (int sec, int rate, float zero){
     Serial.print("Humidity: ");
     Serial.print(average[2]);
     Serial.println("%");
-   /* Serial.print("max:");
-    Serial.println(maxVal);
-    Serial.print("min: ");
-    Serial.println(min_val);
-    Serial.print("middle: ");
-    Serial.println(middle);
-    Serial.println("");
-    Serial.print("average: ");
-    Serial.println(average);
-    Serial.println(""); */
     return average; 
   }
 
@@ -178,15 +170,13 @@ void setup() {
 }
 
 void loop() {
-  float temp, humidity,SVP,VPD;
+  float temp, humidity,VPD;
   float *readvalue;
   readvalue = averageRead(15, 10, zero);
   temp = readvalue[1];
   humidity = readvalue[2];
   Serial.println(temp);
   Serial.println(humidity);
-  SVP = 0.61078*exp((temp/(temp+238.3))*17.2694);
-  VPD = SVP*(1-(humidity/100));
   //------------------------------------------------------------------------------------
   //Thingspeak setup:  
   ThingSpeak.setField(1,readvalue[0]);
