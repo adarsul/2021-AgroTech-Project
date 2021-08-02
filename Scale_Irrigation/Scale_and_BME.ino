@@ -175,6 +175,7 @@ void loop() {
   readvalue = averageRead(15, 10, zero);
   temp = readvalue[1];
   humidity = readvalue[2];
+  VPD = calc_VPD(temp, humidity);
   Serial.println(temp);
   Serial.println(humidity);
   //------------------------------------------------------------------------------------
