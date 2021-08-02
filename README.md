@@ -14,7 +14,7 @@ project page
 2. Moisture Controlled:
 A closed loop system where data of soil moisture is collected by PM-WCS-3 Soil sensor to determine watering.
 
-project page:
+[project page](https://github.com/adarsul/2021-AgroTech-Project/tree/main/Moisture%20Controlled)
 
 3. Weight Controlled:
 A closed loop system where data of the plants weight is monitored by HX711 load cell scale. Watering is set by minimum and maximum values that are updated automatically to compensate for plant growth.
