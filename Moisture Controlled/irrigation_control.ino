@@ -124,7 +124,7 @@ void loop() {
       Serial.println(dat[3]);
 
       //solenoid activation
-      if ( time_h  == 7 && time_m < 1 ) {
+      if ( vwc < 60 ) {
         
         while ( vwc < 90 ){
           digitalWrite(moisture_solenoidPin, HIGH);
@@ -135,6 +135,7 @@ void loop() {
           vwc = dat[3];
           
           }
+         digitalWrite(moisture_solenoidPin, LOW);
         }
       
       else {
