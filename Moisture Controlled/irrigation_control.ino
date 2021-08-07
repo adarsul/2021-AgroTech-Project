@@ -1,7 +1,6 @@
 //------------------------------------------------------------------------------------
 // Wifi and Thingspeak setup:
 #include <WiFi.h>
-#include "time.h"
 
 #include "ThingSpeak.h"
 unsigned long myChannelNumber = <ChannelNumber>;
@@ -24,25 +23,6 @@ float e25;
 float ec;
 float temp;
 float vwc;
-
-//**************************************************************************************
-//NTP for time synchrinization
-
-// Set time
-#include <NTPClient.h>
-#include <WiFiUdp.h>
-
-const long utcOffsetInSeconds = 3600*3;  // For UTC +2.00 : 2 * 60 * 60 : 3600
-char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
-unsigned long delayTime;
-
-
-// Define NTP Client to get time
-WiFiUDP ntpUDP;
-NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
-
-int time_h ; // variable for the hour
-int time_m ; // variable for the minute
 
 //**************************************************************************************
 
@@ -87,13 +67,7 @@ void setup() {
 
 void loop() {
     for (int i = 0; i <= 15; i++) {
-      timeClient.update();
-      time_h = timeClient.getHours(); 
-      time_m = timeClient.getMinutes();
-      Serial.print("Time:");
-      Serial.printf("%d, %d", time_h, time_m);  
-      Serial.println();
-      
+     
       vcs.newReading(); // start sensor reading
       
       float dat[4]={0,0,0,0}; //getting values one by one
