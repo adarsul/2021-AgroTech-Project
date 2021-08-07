@@ -1,7 +1,11 @@
 Soil Moisture Watering Based System
 =====================================
 
-with data logging using ThingSpeak platform for further data analysis
+With data logging using ThingSpeak platform for further data analysis.
+
+The purpose of this project is to create an irrigation system that waters the plant based on the moisture of the plant's siol.
+If the soil is dry then the soleniod valve will open and water the plant.
+
 
 Equipment used:
 
@@ -21,10 +25,9 @@ Thats how the data looked like:
 
 <img width="420" alt="data_collection" src="https://user-images.githubusercontent.com/88232723/127740099-42e496c7-87fc-4e32-a748-e2cde4227e71.png">
 
-Based on the results, we decided to set the max VWC threshold value to 90.
+Analysis of the results showed that the lowest VWC is 60 and the max VWC is 90. We decided to set the waterign thresholds to these vallues.
 
 The Irrigation System
 ---------------------
-The system is set to run in the morning at 7:00 AM.
-If the the VWC value in lower than 90, the valve will open and water until the thershold has reached.
+The system is set to water when the WLC goes under 60 until it reaches the top threshold of 90,
 Code for the system can be found [here](https://github.com/adarsul/2021-AgroTech-Project/blob/main/Moisture%20Controlled/irrigation_control.ino).
