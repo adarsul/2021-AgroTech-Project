@@ -21,4 +21,6 @@ A closed loop system where data of the plants weight is monitored by HX711 load 
 
 [project page](https://github.com/adarsul/2021-AgroTech-Project/tree/main/Scale_Irrigation)
 
+4. The unified version combining the 3 methods to one code (used on our report)
+[Code](https://github.com/adarsul/2021-AgroTech-Project/blob/main/Report/Unified_Upload.ino)
 [Final Project report](https://github.com/adarsul/2021-AgroTech-Project/blob/main/Report/Sensor%20Based%20Irrigation%20with%20ESP32%20-%20report.ipynb)
