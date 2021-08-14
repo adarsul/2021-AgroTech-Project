@@ -12,10 +12,6 @@ In this project we created a weight controlled irrigation system - pot weight is
 * 4 channel arduino relay
 * 1528-2003-ND Solenoid Valve
 
-## Wiring 
-
-Diagram here
-
 ## Code Explanation
 
 ### Main Premise
@@ -23,8 +19,6 @@ The program constantly collects data of the pot's weight and sends it to thingsp
 
 
 The libraries that were used:
-
-pic
 
 Wifi.h allows internet connection
 
@@ -77,16 +71,4 @@ In our case, because the thingspeak server allows for communication every 15 sec
 * If the measured weight is greater than MAX_WEIGHT then the weightUpdate function is triggered - updating MAX_WEIGHT and MIN_WEIGHT and adding the differnce to the GROWTH variable.
 * Send data to thingspeak channel.
 
-For the data analysis we used for the watering algorithm:
-
-
-
-
-```python
-
-```
-
-
-```python
-
-```
+For the data analysis we used for the watering algorithm [click here](https://github.com/adarsul/2021-AgroTech-Project/blob/main/Scale_Irrigation/Watering%20Algorithm/Watering%20algorithm.ipynb)
