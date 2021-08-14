@@ -53,7 +53,7 @@ You set Maximum weight to the weight of the plant after watering, minimum weight
 #### Scale Calibration
 HX711 translates force to Electrical output values. In order to get readings in grams calibration was needed. We used a linear regression in order to match the output value to a reading in grams. In this code, the conversion is done within the averageRead function.
 
-For more information about calibration:
+For more information about calibration [click here](https://github.com/adarsul/2021-AgroTech-Project/blob/main/Scale_Irrigation/Calibration/Calibration.ipynb)
 
 
 #### averageRead function
