@@ -29,7 +29,7 @@ float MIN_WEIGHT = 3200; //min weight threshold
 float GROWTH; // tracks gains in weight
 
 int interval_count, moisture_count, scale_count; //counters for watering
-int isOpen = 0; // variable that describes which solenoids are open. Full explanation in counter function.
+bool interval_open, moisture_open, scale_open; //track when solenoid is open
 
 //open solenoid valve
 void giveWater(int solenoid, int count){
@@ -37,86 +37,58 @@ void giveWater(int solenoid, int count){
         switch(solenoid){
         case scale_solenoidPin:
           Serial.println("Scale solenoid open");
-          isOpen += 1;
+          scale_open = true;
           break;
         case moisture_solenoidPin:
           Serial.println("Moisture solenoid open");
-          isOpen += 2;
+          moisture_open = true;
           break;
         case interval_solenoidPin:
           Serial.println("Interval solenoid open");
-          isOpen += 4;
+          interval_open = true;
           break;
         }
 }
+
+//close solenoid valve, set back to 0
 void stopWater(int solenoid, int count){
         digitalWrite(solenoid, LOW);
          count = 0;
         switch(solenoid){
         case scale_solenoidPin:
           Serial.println("Scale solenoid closed");
-          isOpen -= 1;
+          scale_open = false;
           break;
         case moisture_solenoidPin:
           Serial.println("Moisture solenoid closed");
-          isOpen -= 2;
+          moisture_open = false;
           break;
         case interval_solenoidPin:
           Serial.println("Interval solenoid closed");
-          isOpen -= 4;
+          interval_open = false;
           break;
         }
   }
 
-/*raise count for open solenoids - fix for multiple solenoids open at once
-isOpen varaible tracks which valves are open through different values:
-1,3,5,7  Scale valve is open
-2,3,6,7 Moisture valve is open
-4,5,6,7 Interval valve is open
-*/
-void counter(int isOpen){
+//raise count for open solenoids
+void counter(){
   
-  switch (isOpen){
+  if (interval_open == true){
+    interval_count++;
+  }
   
-  case 1:
-  scale_count++;
-  break;
+  if (moisture_open == true){
+    moisture_count++;
+  }
   
-  case 2: 
-  moisture_count++;
-  break;
-  
-  case 3: 
-  scale_count++; 
-  moisture_count++;
-  break;
-  
-  case 4:
-  interval_count++;
-  break;
-  
-  case 5:
-  scale_count++;
-  interval_count++;
-  break;
-
-  case 6:
-  moisture_count++;
-  interval_count++;
-  break;
-  
-  case 7:
-  scale_count++;
-  moisture_count++;
-  interval_count++;
-  break;
+  if (scale_open == true){
+    scale_count++;
   }
 }
 
 // Wifi and Thingspeak setup:
 #include <WiFi.h>
 #include "time.h"
-
 #include "ThingSpeak.h"
 unsigned long myChannelNumber = "" ; //your channel ID
 const char * myWriteAPIKey = ""; //your channel's write API key
@@ -139,6 +111,7 @@ SVCS3 vcs;
 
 float e25, ec, soil_temp, vwc;
 
+//Prints the valuse from the soil moisture sensor data array
 void printSensor(float dat[4]){
       Serial.println("Soil Sensor:");
       Serial.print("e25 = ");
@@ -292,7 +265,7 @@ void loop() {
         printSensor(weight); 
       }
       else{
-      Serial.println("oops");
+      Serial.println("No reading");
       i--;
       }
       delay(1000);
@@ -301,21 +274,21 @@ void loop() {
    float average = getScaleValue(weight_arr);
    
 //interval_solenoidPin activation - if time is trigger time and solenoid is closed
-   if (time_h  == HOUR_TRIG && time_m == MIN_TRIG && interval_count == 0) {
+   if (time_h  == HOUR_TRIG && time_m == MIN_TRIG && interval_open == false) {
       giveWater(interval_solenoidPin, interval_count);
    } 
    if (interval_count > INTERVAL_DUR){
       stopWater(interval_solenoidPin, interval_count);
    }
  //moisture_solenoidPin activation - if moisture is below minimum trigger and solenoid is closed
-   if ( vwc < MIN_MOISTURE && moisture_count == 0) {
+   if ( vwc < MIN_MOISTURE && moisture_open == false) {
       giveWater(moisture_solenoidPin, moisture_count);
    }
    if (vwc > MAX_MOISTURE || moisture_count > MOISTURE_DUR){
       stopWater(moisture_solenoidPin, moisture_count);
    }
 //scale solenoid activation - if weight is below minimum trigger and solenoid is closed
-   if (average < MIN_WEIGHT && scale_count == 0){
+   if (average < MIN_WEIGHT && scale_open == false){
       giveWater(scale_solenoidPin, scale_count);
    }
    if (scale_count > SCALE_DUR){ 
@@ -325,15 +298,15 @@ void loop() {
           weightUpdate(average);
       }
    }
-   counter(isOpen); //if a solenoid is open update counter
+   counter(); //if a solenoid is open update counter
    
  //Thingspeak setup:
-    ThingSpeak.setField(1, e25);
-    ThingSpeak.setField(2, ec);
-    ThingSpeak.setField(3, soil_temp);
-    ThingSpeak.setField(4, vwc);
-    ThingSpeak.setField(5, weight);
-    ThingSpeak.setField(7, isOpen);
+    ThingSpeak.setField(1,weight);
+    ThingSpeak.setField(2,vwc);
+    ThingSpeak.setField(3,soil_temp);
+    ThingSpeak.setField(4,interval_open);
+    ThingSpeak.setField(5,moisture_open);
+    ThingSpeak.setField(6,scale_open);
     ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);
   
     Serial.println("uploaded to Thingspeak server....");
